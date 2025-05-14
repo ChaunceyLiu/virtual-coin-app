@@ -1,26 +1,333 @@
 @import "tailwindcss";
 
+/* @import url("./animation.css");
+@import url("../components/chakraAdapt/RcTable/style.css");
+@import url("../components/TradingView/components/Scrollbar/ScrollWrapper.css");
+@import url("../components/TradingView/components/Scrollbar/ThumbBar.css");
+@import url("../styles/react-datepicker.css"); */
+@import "./theme/theme.css";
+
+.progress-token {
+  transition: --progress-token 0.5s;
+}
+
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --bg-color: #0d0d0f;
+  --card-color: #0d0d0f;
+  --border-color: #1f2024;
+  --accent-color: #f0f5f5;
+  --auxiliary-color: #676e70;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+html,
+body {
+  height: 100%;
+  color: rgb(0, 0, 0);
+  background: rgb(255, 255, 255);
+  transition-property: background-color;
+  transition-duration: var(--chakra-transition-duration-normal);
+  line-height: var(--chakra-lineHeights-base);
+  border-color: rgb(228, 228, 228);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+html[data-theme="dark"] {
+  --table-hover-color: #15161a;
+  --blast-main-color: #ffd039;
+  --base-main-color: #158fff;
+}
+
+html[data-theme="light"] {
+  --table-hover-color: #f3f5f5;
+  --blast-main-color: #ff9839;
+  --base-main-color: #0052ff;
+}
+
+:host,
+:root,
+[data-theme],
+body {
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+}
+
+/* 滚动条宽度 */
+:not(.g-table-wrapper.scrollbar .g-table-body)::-webkit-scrollbar {
+  display: none;
+}
+
+.g-table-wrapper.hide-horizontal-scrollbar
+  .g-table-tbody-virtual-scrollbar-horizontal {
+  display: none;
+}
+
+.g-table-wrapper.scrollbar .g-table-body {
+  overflow-y: auto;
+  scrollbar-color: rgba(153, 153, 153, 0.6) transparent;
+  scrollbar-width: thin;
+  /*margin-right: -10px;*/
+  /*padding-right: 10px;*/
+}
+
+.g-table-wrapper.scrollbar .g-table-body::-webkit-scrollbar {
+  width: 5px;
+  height: 8px;
+  background-color: transparent;
+}
+
+.g-table-wrapper tr:hover {
+  background-color: var(--row-hover-bg) !important;
+}
+
+/* 滚动条背景色 */
+/* ::-webkit-scrollbar-track {
+  background: transparent;
+  border-radius: 12px;
+} */
+
+/* 滚动条颜色 */
+/* ::-webkit-scrollbar-thumb {
+  background-color: #26282c;
+  border-radius: 12px;
+}
+
+*:hover::-webkit-scrollbar-thumb {
+  background-color: #26282c;
+} */
+
+input::-webkit-input-placeholder {
+  font-size: 12px;
+  text-align: left;
+}
+
+input:-moz-placeholder {
+  font-size: 12px;
+  text-align: left;
+}
+
+input::-moz-placeholder {
+  font-size: 12px;
+  text-align: left;
+}
+
+input:-ms-input-placeholder {
+  font-size: 12px;
+  text-align: left;
+}
+
+button {
+  outline: none;
+}
+
+@media screen and (min-width: 100px) {
+  html {
+    font-size: 16px;
   }
 }
 
+@media screen and (min-width: 1024px) {
+  html {
+    font-size: 14px;
+  }
+}
+
+@media screen and (min-width: 1366px) {
+  html {
+    font-size: 16px;
+  }
+}
+
+/* @media screen and (min-width: 1440px) {
+  .live-name {
+    max-width: 220px !important;
+  }
+} */
+
+@media screen and (min-width: 1660px) {
+  html {
+    font-size: 20px;
+  }
+}
+
+/* @media screen and (min-width: 1920px) {
+  html {
+    font-size: 20px;
+  }
+
+} */
+
+.icon_link:hover .icon_link_icon {
+  display: none;
+}
+
+.icon_link:hover .icon_link_hover {
+  display: flex;
+}
+
+@keyframes table_bg {
+  0% {
+    background-color: #60771f;
+  }
+
+  100% {
+    background-color: unset;
+  }
+}
+
+*:focus-visible {
+  outline: none;
+  box-shadow: none !important;
+}
+
+.safe-bottom {
+  padding-bottom: env(safe-area-inset-bottom);
+}
+
+.safe-bottom-footer-h5 {
+  margin-bottom: calc(env(safe-area-inset-bottom) + 56px);
+}
+
+#okx-inject {
+  display: none;
+}
+
+iframe {
+  width: 100%;
+  height: 100%;
+}
+
+.cursor-pointer {
+  cursor: pointer;
+}
+
+/* sol钱包插件css适配 */
+.wallet-adapter-modal-title {
+  padding: 12px;
+  padding-top: 20px;
+  font-size: 16px;
+  text-align: left;
+  width: 100%;
+  display: block;
+}
+
+.wallet-adapter-modal-list .wallet-adapter-button span {
+  display: none;
+}
+
+.fade-in-x-row-animation {
+  animation: fade-in-x 0.3s ease-in;
+}
+
+@keyframes fade-in-x {
+  from {
+    opacity: 0;
+    transform: translateX(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.first-upcase::first-letter {
+  text-transform: uppercase;
+}
+
+.table-opacity-4 {
+  opacity: 0.4;
+}
+
+.table-opacity-6 {
+  opacity: 0.6;
+}
+
+.table-tr-deep-red .g-table-cell,
+.table-tr-deep-red:hover .g-table-cell {
+  background-color: var(--chakra-colors-decrease20) !important;
+}
+
+.ag-deep-red-row {
+  background-color: var(--chakra-colors-decrease20) !important;
+}
+
+.menu-trigger > span {
+  pointer-events: unset !important;
+}
+
+/* popover 弹出层 z-index 9999 */
+.chakra-popover__popper {
+  z-index: 9999 !important;
+}
+
+.g-table.g-table-small .g-table-tbody > tr > td {
+  padding: 4px;
+}
+
+.g-table.g-table-small .g-table-cell,
+.g-table.g-table-small .g-table-thead > tr > th {
+  padding: 4px;
+}
+
+.token-hide-button {
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+
+.g-table-wrapper tr:hover .token-hide-button {
+  opacity: 1;
+}
+
+img[src=""],
+img:not([src]) {
+  opacity: 0;
+}
+
+html,
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  --font-base: "Switzer", "MiSans", "Microsoft YaHei", sans-serif;
+  --font-mono: var(--font-base);
+  font-feature-settings: "tnum" !important;
+  letter-spacing: -0.2px;
+}
+
+html[lang="zh-CN"] {
+  --font-base: "Switzer", "MiSans", "Microsoft YaHei", sans-serif;
+  --font-mono: var(--font-base);
+}
+
+html[lang="zh-TW"] {
+  --font-base: "Switzer", "MiSans", "PingFang TC", "Microsoft YaHei", sans-serif;
+  --font-mono: var(--font-base);
+}
+
+html[lang="ko"] {
+  --font-base: "Switzer", "MiSans", "Noto Sans KR", sans-serif;
+  --font-mono: var(--font-base);
+}
+
+html[lang="ja"] {
+  --font-base: "Switzer", "MiSans", "Noto Sans JP", sans-serif;
+  --font-mono: var(--font-base);
+}
+
+html body {
+  font-family: var(--font-mono);
+}
+
+.grecaptcha-badge {
+  visibility: hidden;
+}
+
+.react-draggable-transparent-selection {
+  user-select: none;
+}
+
+.wallet-select .rc-virtual-list-scrollbar-thumb {
+  background: rgb(var(--color-scrollbar)) !important;
+}
+
+.text-text-300 {
+  color: rgb(var(--color-text-300)) !important;
+}
+
+.bg-input {
+  background-color: rgb(var(--color-input) / var(--tw-bg-opacity, 1));
 }
