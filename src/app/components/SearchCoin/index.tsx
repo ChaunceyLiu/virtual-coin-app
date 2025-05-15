@@ -12,6 +12,10 @@ export interface DebounceSelectProps<ValueType = any>
 
 function DebounceSelect<
   ValueType extends {
+    price_change_percent: any;
+    total_supply: any;
+    liquidity: any;
+    volume: any;
     key?: string;
     symbol: React.ReactNode;
     price: string | number;
@@ -50,6 +54,8 @@ function DebounceSelect<
 
   return (
     <Select
+      virtual
+
       className="bg-transparent"
       labelInValue
       filterOption={false}
@@ -65,13 +71,28 @@ function DebounceSelect<
         </div>
       )}
       notFoundContent={
-        <div>
-          {defaultOptions.map((option) => (
-            <div style={{ display: "flex", alignItems: "center" }}>
+        <div className="max-h-[500px] overflow-y-auto">
+          {defaultOptions.map((option, index) => (
+            <div key={index} style={{ display: "flex", alignItems: "center" }}>
               {option.logo && (
-                <Avatar src={option.logo} style={{ marginRight: 8 }} />
+                <Avatar
+                  src={option.logo}
+                  style={{ marginRight: 8 }}
+                  className="width-[80px]"
+                />
               )}
-              {option.symbol}
+              <span>{option.symbol}</span>
+              <div>
+                <p>{`24h V $${option.volume}M`}</p>
+                <p>{`LIQ $${option.liquidity}`}</p>
+              </div>
+              <div>
+                <p>
+                  {`$${option.total_supply}M`}{" "}
+                  <span>{`${option.price_change_percent}%`}</span>
+                </p>
+                <p>24h MC</p>
+              </div>
             </div>
           ))}
         </div>

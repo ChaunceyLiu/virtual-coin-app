@@ -1,7 +1,7 @@
 // src/providers/Web3Provider.tsx
 "use client";
 
-import { ReactNode } from "react";
+import type { ReactNode } from "react";
 import { WagmiProvider, createConfig } from "wagmi";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { mainnet, sepolia } from "wagmi/chains";
