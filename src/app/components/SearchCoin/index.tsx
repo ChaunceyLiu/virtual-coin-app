@@ -1,7 +1,8 @@
 import React, { useMemo, useRef, useState } from "react";
-import { Select, Spin, Avatar } from "antd";
+import { Select, Avatar } from "antd";
 import type { SelectProps } from "antd";
 import debounce from "lodash.debounce";
+import hn from "human-number";
 
 export interface DebounceSelectProps<ValueType = any>
   extends Omit<SelectProps<ValueType | ValueType[]>, "options" | "children"> {
@@ -55,7 +56,6 @@ function DebounceSelect<
   return (
     <Select
       virtual
-
       className="bg-transparent"
       labelInValue
       filterOption={false}
@@ -73,23 +73,31 @@ function DebounceSelect<
       notFoundContent={
         <div className="max-h-[500px] overflow-y-auto">
           {defaultOptions.map((option, index) => (
-            <div key={index} style={{ display: "flex", alignItems: "center" }}>
+            <div key={index} className="flex items-center text-[#333]">
               {option.logo && (
-                <Avatar
-                  src={option.logo}
-                  style={{ marginRight: 8 }}
-                  className="width-[80px]"
-                />
+                <div className="min-w-[60px]">
+                  <Avatar src={option.logo} className="mr-8" size={60} />
+                </div>
               )}
-              <span>{option.symbol}</span>
-              <div>
-                <p>{`24h V $${option.volume}M`}</p>
-                <p>{`LIQ $${option.liquidity}`}</p>
+              <div className="font-bold text-[14px] px-1 w-[120px]">
+                {option.symbol}
               </div>
-              <div>
+              <div className="text-[11px] pr-4">
+                <p>{`24h V $${parseInt(hn(option.volume))}`}</p>
+                <p>{`LIQ $${parseInt(hn(option.liquidity))}`}</p>
+              </div>
+              <div className="text-[11px]">
                 <p>
-                  {`$${option.total_supply}M`}{" "}
-                  <span>{`${option.price_change_percent}%`}</span>
+                  {`$${parseInt(hn(option.total_supply))}`}
+                  <span
+                    className={
+                      option.price_change_percent > 0
+                        ? "text-green-900"
+                        : "text-red-900"
+                    }
+                  >{`         ${option.price_change_percent.toFixed(
+                    2
+                  )}%`}</span>
                 </p>
                 <p>24h MC</p>
               </div>

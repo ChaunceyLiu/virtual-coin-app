@@ -1,8 +1,19 @@
 "use client";
 import type { TableColumnsType, TableProps } from "antd";
-import { Segmented, Table } from "antd";
+import { Avatar, Button, Segmented, Table } from "antd";
 import { useState } from "react";
 import { rankMock } from "@/mock/rankMock";
+import {
+  CopyOutlined,
+  GlobalOutlined,
+  LoginOutlined,
+  MenuFoldOutlined,
+  SearchOutlined,
+  SendOutlined,
+  SettingOutlined,
+  XOutlined,
+} from "@ant-design/icons";
+import Image from "next/image";
 
 export interface DataType {
   symbol: string;
@@ -31,11 +42,35 @@ const CoinTable: React.FC = () => {
         { text: "Joe", value: "Joe" },
         { text: "Jim", value: "Jim" },
       ],
+      width: 300,
       filteredValue: filteredInfo.name || null,
       onFilter: (value, record) => record.symbol.includes(value as string),
       sorter: (a, b) => a.symbol.length - b.symbol.length,
       sortOrder: sortedInfo.columnKey === "name" ? sortedInfo.order : null,
       ellipsis: true,
+      render: (_, record) => (
+        <div className="flex items-center gap-2">
+          <Avatar
+            src={record.logo}
+            alt={record.symbol}
+            size={50}
+            className="min-w-[50]"
+          ></Avatar>
+          <div>
+            <p>
+              {`${record?.symbol}`}
+              <SearchOutlined />
+            </p>
+            <p className="text-[#858E8F] text-[12px]">
+              {`$${record?.address.replace(/^(.{4}).*(.{4})$/, "$1...$2")}`}
+              <CopyOutlined className="ml-1" />
+              <XOutlined className="ml-1" />
+              <GlobalOutlined className="ml-1"/>
+              <SendOutlined className="ml-1" />
+            </p>
+          </div>
+        </div>
+      ),
     },
     {
       title: "池子",
@@ -86,8 +121,8 @@ const CoinTable: React.FC = () => {
     <div className="flex flex-col w-full h-full">
       <div className="flex items-center justify-between w-full h-10 px-4 bg-bg-200 mb-4">
         <div className="flex items-center gap-2">
-          <div className="font-bold">热门</div>
-          <div className="font-bold flex mx-4 text-[#858E8F]">
+          <div className="font-bold cursor-pointer">热门</div>
+          <div className="font-bold flex mx-4 text-[#858E8F] cursor-pointer">
             <svg
               width="20px"
               height="20px"
@@ -110,6 +145,23 @@ const CoinTable: React.FC = () => {
               console.log(value); // string
             }}
           />
+        </div>
+        <div>
+          <Button
+            style={{ color: "#333" }}
+            type="link"
+            icon={<LoginOutlined />}
+          >
+            过滤devs
+          </Button>
+          <Button
+            style={{ color: "#333" }}
+            type="link"
+            icon={<MenuFoldOutlined />}
+          >
+            筛选
+          </Button>
+          <SettingOutlined />
         </div>
       </div>
       <div className="flex flex-col w-full h-full overflow-y-auto">

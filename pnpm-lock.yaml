@@ -17,6 +17,9 @@ importers:
       antd:
         specifier: ^5.25.1
         version: 5.25.1(date-fns@2.30.0)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
+      human-number:
+        specifier: ^2.0.4
+        version: 2.0.4
       lodash.debounce:
         specifier: ^4.0.8
         version: 4.0.8
@@ -48,6 +51,9 @@ importers:
       '@tailwindcss/postcss':
         specifier: ^4
         version: 4.1.6
+      '@types/human-number':
+        specifier: ^1.0.2
+        version: 1.0.2
       '@types/lodash.debounce':
         specifier: ^4.0.9
         version: 4.0.9
@@ -832,6 +838,9 @@ packages:
 
   '@types/estree@1.0.7':
     resolution: {integrity: sha512-w28IoSUCJpidD/TGviZwwMJckNESJZXFu7NBZ5YJ4mEUnNraUn9Pm8HSZm/jDF1pDWYKspWE7oVphigUPRakIQ==}
+
+  '@types/human-number@1.0.2':
+    resolution: {integrity: sha512-Xm2hW0MXOjX/IOrRv8IRLycwVz23cU51b3fUn3Km5q8+4oM88uJaZ36dD1S0qINg92jhfQm7iEuAxZefIIffYg==}
 
   '@types/json-schema@7.0.15':
     resolution: {integrity: sha512-5+fP8P8MFNC+AyZCDxrB2pkZFPGzqQWUzpSeuuVLvm8VMcorNYavBqoFcxK8bQz4Qsbn4oUEEem4wDLfcysGHA==}
@@ -1921,6 +1930,10 @@ packages:
     resolution: {integrity: sha512-FtwrG/euBzaEjYeRqOgly7G0qviiXoJWnvEH2Z1plBdXgbyjv34pHTSb9zoeHMyDy33+DWy5Wt9Wo+TURtOYSQ==}
     engines: {node: '>= 0.8'}
 
+  human-number@2.0.4:
+    resolution: {integrity: sha512-OENvA941poJU1VGR6s5Nf/GpYNPE+81lmHkIVLO9FgiyHxB+BSlVOJV3lnItk5tfHzcEbZv3kTQrzpZK0+ExRA==}
+    engines: {node: '>= 8'}
+
   iconv-lite@0.6.3:
     resolution: {integrity: sha512-4fCk79wshMdzMp2rH06qWrJE4iolqLhCUH+OiuIgU++RB0+94NlDL81atO7GX55uUKueo0txHNtvEyI6D7WdMw==}
     engines: {node: '>=0.10.0'}
@@ -2936,6 +2949,10 @@ packages:
   reusify@1.1.0:
     resolution: {integrity: sha512-g6QUff04oZpHs0eG5p83rFLhHeV00ug/Yf9nZM6fLeUrPguBTkTQOdpAWWspMh55TZfVQDPaN3NQJfbVRAxdIw==}
     engines: {iojs: '>=1.0.0', node: '>=0.10.0'}
+
+  round-to@5.0.0:
+    resolution: {integrity: sha512-i4+Ntwmo5kY7UWWFSDEVN3RjT2PX1FqkZ9iCcAO3sKML3Ady9NgsjM/HLdYKUAnrxK4IlSvXzpBMDvMHZQALRQ==}
+    engines: {node: '>=10'}
 
   router@2.2.0:
     resolution: {integrity: sha512-nLTrUKm2UyiL7rlhapu/Zl45FwNgkZGaCpZbIHajDYgwlJCOzLSk+cIPAnsEqV955GjILJnKbdQC1nVPz+gAYQ==}
@@ -4557,6 +4574,8 @@ snapshots:
       '@types/ms': 2.1.0
 
   '@types/estree@1.0.7': {}
+
+  '@types/human-number@1.0.2': {}
 
   '@types/json-schema@7.0.15': {}
 
@@ -6371,6 +6390,10 @@ snapshots:
       statuses: 2.0.1
       toidentifier: 1.0.1
 
+  human-number@2.0.4:
+    dependencies:
+      round-to: 5.0.0
+
   iconv-lite@0.6.3:
     dependencies:
       safer-buffer: 2.1.2
@@ -7476,6 +7499,8 @@ snapshots:
       supports-preserve-symlinks-flag: 1.0.0
 
   reusify@1.1.0: {}
+
+  round-to@5.0.0: {}
 
   router@2.2.0:
     dependencies:
