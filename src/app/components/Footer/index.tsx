@@ -1,6 +1,5 @@
 // components/Footer.tsx
 import Link from "next/link";
-import Image from "next/image";
 import { FC } from "react";
 import {
   AndroidOutlined,
@@ -20,7 +19,7 @@ import {
 
 const Footer: FC<{ solPrice?: string }> = ({ solPrice = "$180.67" }) => {
   return (
-    <footer className="flex h-9 justify-between px-6 text-sm font-medium bg-bg-200 border-t border-line-100 border-gray-200">
+    <footer className="flex h-9 justify-between px-6 text-sm font-medium bg-bg-200 border-t border-line-100 border-gray-200  min-h-[44px]">
       <div className="flex items-center gap-2">
         {/* 左侧导航组 */}
         <div className="flex items-center gap-1 px-1.5 py-1 rounded-[6px] cursor-pointer text-text-300 hover:text-text-100 hover:bg-hover-200">

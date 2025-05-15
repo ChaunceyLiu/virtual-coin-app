@@ -4,20 +4,78 @@ import Image from "next/image";
 import Link from "next/link";
 import SearchCoin from "../SearchCoin";
 import { DownOutlined, SettingOutlined } from "@ant-design/icons";
+import { Dropdown, Space } from "antd";
 
 const Header = () => {
-  const [isNetworkMenuOpen, setNetworkMenuOpen] = useState(false);
+  const [newWork, setNetwork] = useState({
+    name: "SOL",
+    image: "/solana.webp",
+  });
   const [isSettingsMenuOpen, setSettingsMenuOpen] = useState(false);
   const [value, setValue] = useState([]);
 
   const networks = [
-    { name: "SOL", icon: "/ether.webp" },
-    { name: "ETH", icon: "/solana.webp" },
+    {
+      name: "SOL",
+      image: "/solana.webp",
+      key: "sol",
+      label: (
+        <div
+          className="flex items-center p-3 hover:bg-gray-700"
+          onClick={() => {
+            setNetwork({
+              name: "SOL",
+              image: "/solana.webp",
+            });
+          }}
+        >
+          <Image src="/solana.webp" alt={"SOL"} width={20} height={20} />
+          <span className="ml-2">SOL</span>
+        </div>
+      ),
+    },
+    {
+      name: "ETH",
+      image: "/ether.webp",
+      key: "eth",
+      label: (
+        <div
+          className="flex items-center p-3 hover:bg-gray-700"
+          onClick={() => {
+            setNetwork({
+              name: "ETH",
+              image: "/ether.webp",
+            });
+          }}
+        >
+          <Image src="/ether.webp" alt={"ETH"} width={20} height={20} />
+          <span className="ml-2">ETH</span>
+        </div>
+      ),
+    },
     // 其他网络配置...
   ];
 
+  const settings = [
+    {
+      key: "trade",
+      label: (
+        <a
+          href="https://t.me/GMGN_sol03_bot"
+          onClick={(e) => e.preventDefault()}
+        >
+          Telegram交易Bot
+        </a>
+      ),
+    },
+    {
+      key: "voiceSetting",
+      label: <a onClick={(e) => e.preventDefault()}>声音设置</a>,
+    },
+  ];
+
   return (
-    <header className="flex h-[60px] items-center justify-between gap-x-[16px] border-b-[1px] border-b-line-100 border-gray-200">
+    <header className="flex h-[60px] items-center justify-between gap-x-[16px] border-b-[1px] border-b-line-100 border-gray-200 min-h-[60px]">
       <div className="flex items-center gap-x-[16px] pl-4">
         <Link
           href="/?chain=eth"
@@ -71,7 +129,6 @@ const Header = () => {
 
       {/* 搜索框 */}
       <div className="w-[420px] relative flex-1 max-w-[420px]">
-        {/* 搜索图标和输入框 */}
         <SearchCoin
           mode="multiple"
           value={value}
@@ -88,42 +145,18 @@ const Header = () => {
 
       {/* 网络选择 */}
       <div className="relative flex flex-row">
-        <button
-          onClick={() => setNetworkMenuOpen(!isNetworkMenuOpen)}
-          className="flex items-center gap-x-1.5 text-text-100"
-        >
-          <Image src="/ether.webp" alt="network" width={20} height={20} />
-          <span>ETH</span>
-          <DownOutlined className="w-[10]" />
-        </button>
-
-        {isNetworkMenuOpen && (
-          <div className="absolute right-0 mt-2 w-48 bg-bg-100 rounded-lg shadow-lg">
-            {networks.map((network) => (
-              <div
-                key={network.name}
-                className="flex items-center p-3 hover:bg-gray-700"
-              >
-                <Image
-                  src={network.icon}
-                  alt={network.name}
-                  width={20}
-                  height={20}
-                />
-                <span className="ml-2">{network.name}</span>
-              </div>
-            ))}
-          </div>
-        )}
+        <Dropdown menu={{ items: networks }}>
+          <Space>
+            <Image src={newWork.image} alt="network" width={20} height={20} />
+            <span>{newWork.name}</span>
+            <DownOutlined className="w-[10]" />
+          </Space>
+        </Dropdown>
 
         {/* 设置菜单 */}
-        <button
-          onClick={() => setSettingsMenuOpen(!isSettingsMenuOpen)}
-          className="text-text-100 p-2 hover:bg-gray-700 rounded-lg"
-        >
-          {/* 设置图标 */}
-          <SettingOutlined />
-        </button>
+        <Dropdown menu={{ items: settings }}>
+          <SettingOutlined  className="ml-4"/>
+        </Dropdown>
 
         {isSettingsMenuOpen && (
           <div className="absolute right-0 mt-2 w-48 bg-bg-100 rounded-lg shadow-lg">

@@ -35,7 +35,7 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased flex flex-col`}
       >
         <Header />
-        <div className="flex-auto">{children}</div>
+        <main className="flex-auto overflow-y-auto">{children}</main>
         <Footer />
       </body>
     </html>
