@@ -13,7 +13,7 @@ import {
   SettingOutlined,
   XOutlined,
 } from "@ant-design/icons";
-import Image from "next/image";
+import hn from "human-number";
 
 export interface DataType {
   symbol: string;
@@ -65,7 +65,7 @@ const CoinTable: React.FC = () => {
               {`$${record?.address.replace(/^(.{4}).*(.{4})$/, "$1...$2")}`}
               <CopyOutlined className="ml-1" />
               <XOutlined className="ml-1" />
-              <GlobalOutlined className="ml-1"/>
+              <GlobalOutlined className="ml-1" />
               <SendOutlined className="ml-1" />
             </p>
           </div>
@@ -85,29 +85,81 @@ const CoinTable: React.FC = () => {
       sorter: (a, b) => a.address.length - b.address.length,
       sortOrder: sortedInfo.columnKey === "address" ? sortedInfo.order : null,
       ellipsis: true,
+      render: (_, record) => <span>{`${hn(Number(record?.liquidity))}`}</span>,
     },
-    { title: "持有者", dataIndex: "holder_count", key: "holder_count" },
+    {
+      title: "持有者",
+      dataIndex: "holder_count",
+      key: "holder_count",
+      render: (_, record) => <span>{`${record?.holder_count}K`}</span>,
+    },
     {
       title: "1h交易数",
       dataIndex: "buys",
       key: "buys",
-      render: (_, record) => <span>{`${record?.buys}/${record?.sells}`}</span>,
+      render: (_, record) => (
+        <div>
+          <p className="font-bold">{record?.buys + record?.sells}</p>
+          <p>
+            <span className="text-green-900">{record?.buys}</span>/
+            <span className="text-red-900">{record?.sells}</span>
+          </p>
+        </div>
+      ),
     },
-    { title: "价格", dataIndex: "price", key: "price" },
+    {
+      title: "价格",
+      dataIndex: "price",
+      key: "price",
+      render: (_, record) => <span>{`$${(record?.price).toFixed(4)}`}</span>,
+    },
     {
       title: "1m%",
       dataIndex: "price_change_percent1m",
       key: "price_change_percent1m",
+      render: (_, record) => (
+        <span
+          className={`${
+            record.price_change_percent1m > 0
+              ? "text-green-500"
+              : "text-red-500"
+          }`}
+        >
+          {`${record?.price_change_percent1m.toFixed(1)}%`}
+        </span>
+      ),
     },
     {
       title: "5m%",
       dataIndex: "price_change_percent5m",
       key: "price_change_percent5m",
+      render: (_, record) => (
+        <span
+          className={`${
+            record.price_change_percent1m > 0
+              ? "text-green-500"
+              : "text-red-500"
+          }`}
+        >
+          {`${record?.price_change_percent5m.toFixed(1)}%`}
+        </span>
+      ),
     },
     {
       title: "1h%",
       dataIndex: "price_change_percent1h",
       key: "price_change_percent1h",
+      render: (_, record) => (
+        <span
+          className={`${
+            record.price_change_percent1m > 0
+              ? "text-green-500"
+              : "text-red-500"
+          }`}
+        >
+          {`${record?.price_change_percent1h.toFixed(1)}%`}
+        </span>
+      ),
     },
   ];
 
@@ -170,7 +222,7 @@ const CoinTable: React.FC = () => {
           dataSource={rankMock.data.rank}
           onChange={handleChange}
           pagination={false}
-          scroll={{ y: 800 }}
+          scroll={{ y: 750, x: 1200 }}
           virtual
         />
       </div>
