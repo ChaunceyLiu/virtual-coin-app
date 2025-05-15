@@ -5,6 +5,8 @@ import Link from "next/link";
 import SearchCoin from "../SearchCoin";
 import { DownOutlined, SettingOutlined } from "@ant-design/icons";
 import { Dropdown, Space } from "antd";
+import ConnectWalletButton from "../Connect";
+import { searchMock } from "@/mock/searchMock";
 
 const Header = () => {
   const [newWork, setNetwork] = useState({
@@ -12,7 +14,7 @@ const Header = () => {
     image: "/solana.webp",
   });
   const [isSettingsMenuOpen, setSettingsMenuOpen] = useState(false);
-  const [value, setValue] = useState([]);
+  const [value, setValue] = useState<any>([]);
 
   const networks = [
     {
@@ -133,7 +135,8 @@ const Header = () => {
           mode="multiple"
           value={value}
           placeholder="搜索代币/钱包"
-          fetchOptions={() => Promise.resolve([])}
+          fetchOptions={() => Promise.resolve(searchMock.data.rank)}
+          defaultOptions={searchMock.data.rank}
           style={{ width: "100%" }}
           onChange={(newValue) => {
             if (Array.isArray(newValue)) {
@@ -155,7 +158,7 @@ const Header = () => {
 
         {/* 设置菜单 */}
         <Dropdown menu={{ items: settings }}>
-          <SettingOutlined  className="ml-4"/>
+          <SettingOutlined className="ml-4" />
         </Dropdown>
 
         {isSettingsMenuOpen && (
@@ -168,9 +171,7 @@ const Header = () => {
       </div>
 
       {/* 钱包连接 */}
-      <button className="bg-black text-white px-8 py-1 rounded-lg hover:bg-blue-600 transition-colors mr-2">
-        连接
-      </button>
+      <ConnectWalletButton />
     </header>
   );
 };

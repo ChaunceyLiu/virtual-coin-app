@@ -7,18 +7,20 @@ export interface DebounceSelectProps<ValueType = any>
   extends Omit<SelectProps<ValueType | ValueType[]>, "options" | "children"> {
   fetchOptions: (search: string) => Promise<ValueType[]>;
   debounceTimeout?: number;
+  defaultOptions?: ValueType[];
 }
 
 function DebounceSelect<
   ValueType extends {
     key?: string;
-    label: React.ReactNode;
-    value: string | number;
-    avatar?: string;
+    symbol: React.ReactNode;
+    price: string | number;
+    logo?: string;
   } = any
 >({
   fetchOptions,
   debounceTimeout = 300,
+  defaultOptions = [],
   ...props
 }: DebounceSelectProps<ValueType>) {
   const [fetching, setFetching] = useState(false);
@@ -52,17 +54,28 @@ function DebounceSelect<
       labelInValue
       filterOption={false}
       onSearch={debounceFetcher}
-      notFoundContent={fetching ? <Spin size="small" /> : "No results found"}
       {...props}
       options={options}
       optionRender={(option) => (
         <div style={{ display: "flex", alignItems: "center" }}>
-          {option.data.avatar && (
-            <Avatar src={option.data.avatar} style={{ marginRight: 8 }} />
+          {option.data.logo && (
+            <Avatar src={option.data.logo} style={{ marginRight: 8 }} />
           )}
-          {option.label}
+          {option.data.symbol}
         </div>
       )}
+      notFoundContent={
+        <div>
+          {defaultOptions.map((option) => (
+            <div style={{ display: "flex", alignItems: "center" }}>
+              {option.logo && (
+                <Avatar src={option.logo} style={{ marginRight: 8 }} />
+              )}
+              {option.symbol}
+            </div>
+          ))}
+        </div>
+      }
     />
   );
 }
